@@ -33,12 +33,15 @@ class SearchResultParser:
 		self.doc = lxml.html.parse(html).getroot()
 	
 	def parse(self):
-		table = self.doc.xpath('//*[@id="searchResult"]')[0]
-		rows = [row for row in table.iterchildren() if row.tag == 'tr']
 		row_data = []
-		for row in rows:
-			columns = row.getchildren()[1:]
-			row_data.append(self.parse_row_columns(columns))
+		try:
+			table = self.doc.xpath('//*[@id="searchResult"]')[0]
+			rows = [row for row in table.iterchildren() if row.tag == 'tr']
+			for row in rows:
+				columns = row.getchildren()[1:]
+				row_data.append(self.parse_row_columns(columns))
+		except:
+			pass
 		return row_data
 	
 	def parse_row_columns(self, columns):
