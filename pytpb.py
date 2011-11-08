@@ -22,6 +22,10 @@ from urlparse import urljoin
 import lxml.html
 import mechanize
 
+__license__ = 'GPLv2'
+__version__ = 'a1'
+__maintainer__ = 'Nicolas Duhamel'
+
 #TODO: Don't use mechanize
 
 class SearchResultParser:
