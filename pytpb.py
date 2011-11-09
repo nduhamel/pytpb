@@ -20,13 +20,12 @@ from urllib import quote_plus
 from urlparse import urljoin
 
 import lxml.html
-import mechanize
+import urllib2
 
 __license__ = 'GPLv2'
 __version__ = 'a1'
 __maintainer__ = 'Nicolas Duhamel'
 
-#TODO: Don't use mechanize
 
 class SearchResultParser:
 	def __init__(self, html):
@@ -133,15 +132,15 @@ class ThePirateBay:
 	searchUrl = 'https://thepiratebay.org/search/%s/0/7/%d'
 	
 	def __init__(self):
-		self.browser = mechanize.Browser()
+		pass
 			
 	def search(self, term, cat=None):
 		if not cat:
 			cat = 0
 		url = self.searchUrl % (quote_plus(term), cat)
 		
-		self.browser.open(url)
-		html = self.browser.response()
+		req = urllib2.Request(url)
+		html = urllib2.urlopen(req)
 		parser = SearchResultParser(html)
 		return parser.parse()
 
