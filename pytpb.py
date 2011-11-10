@@ -115,8 +115,10 @@ class SearchResultParser:
 					d = d.replace(year=int(year), month=int(month), day=int(day))
 				return d
 		def process_size(part):
+			units = {'MiB':1048576, 'GiB': 1073741824}
 			size, unit = part.split()[1:]
-			return (float(size), unit)
+			size = float(size) * units[unit]
+			return int(size)
 		string = string.replace(u"\xa0", " ")
 		results = [x.strip() for x in string.split(',')]
 		date = process_datetime(' '.join(results[0].split()[1:]))
@@ -144,3 +146,15 @@ class ThePirateBay:
 		parser = SearchResultParser(html)
 		return parser.parse()
 
+if __name__ == '__main__':
+	def prettySize(size):
+		suffixes = [("B",2**10), ("K",2**20), ("M",2**30), ("G",2**40), ("T",2**50)]
+		for suf, lim in suffixes:
+			if size > lim:
+				continue
+			else:
+				return round(size/float(lim/2**10),2).__str__()+suf
+	t = ThePirateBay()
+	for t in t.search('the walking dead'):
+		print t['name'] + '   ' +str(t['size_of'])+ '////' + str(prettySize(t['size_of']))
+	
