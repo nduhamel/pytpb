@@ -18,14 +18,9 @@
 import datetime
 from urllib import quote_plus
 from urlparse import urljoin
-
-import lxml.html
 import urllib2
 
-__license__ = 'GPLv2'
-__version__ = 'a1'
-__maintainer__ = 'Nicolas Duhamel'
-
+import lxml.html
 
 class SearchResultParser:
 	def __init__(self, html):
